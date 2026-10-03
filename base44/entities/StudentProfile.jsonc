@@ -1,0 +1,72 @@
+{
+  "name": "StudentProfile",
+  "type": "object",
+  "properties": {
+    "nie": {
+      "type": "string",
+      "title": "NIE del estudiante"
+    },
+    "first_name": {
+      "type": "string",
+      "title": "Nombres"
+    },
+    "last_name": {
+      "type": "string",
+      "title": "Apellidos"
+    },
+    "age": {
+      "type": "number",
+      "title": "Edad"
+    },
+    "grade": {
+      "type": "string",
+      "title": "Grado",
+      "enum": [
+        "Parvularia 4",
+        "Parvularia 5",
+        "Parvularia 6",
+        "Primer grado"
+      ]
+    },
+    "section": {
+      "type": "string",
+      "title": "Secci\u00f3n"
+    },
+    "guardian_first_name": {
+      "type": "string",
+      "title": "Nombre del encargado"
+    },
+    "guardian_last_name": {
+      "type": "string",
+      "title": "Apellido del encargado"
+    },
+    "guardian_age": {
+      "type": "number",
+      "title": "Edad del encargado"
+    },
+    "guardian_gender": {
+      "type": "string",
+      "title": "G\u00e9nero del encargado",
+      "enum": [
+        "Femenino",
+        "Masculino",
+        "Otro"
+      ]
+    },
+    "guardian_email": {
+      "type": "string",
+      "title": "Correo del encargado"
+    },
+    "avatar_emoji": {
+      "type": "string",
+      "title": "Avatar",
+      "default": "\ud83e\udd8a"
+    }
+  },
+  "required": [
+    "nie",
+    "first_name",
+    "last_name",
+    "grade"
+  ]
+}

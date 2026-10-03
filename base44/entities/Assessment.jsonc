@@ -1,0 +1,46 @@
+{
+  "name": "Assessment",
+  "type": "object",
+  "properties": {
+    "student_profile_id": {
+      "type": "string",
+      "title": "Perfil del estudiante"
+    },
+    "teacher_name": {
+      "type": "string",
+      "title": "Docente"
+    },
+    "area": {
+      "type": "string",
+      "title": "\u00c1rea",
+      "enum": [
+        "habla",
+        "lectura",
+        "escritura",
+        "general"
+      ]
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Fecha"
+    },
+    "result": {
+      "type": "string",
+      "title": "Resultado"
+    },
+    "observations": {
+      "type": "string",
+      "title": "Observaciones"
+    },
+    "sent_to_guardian": {
+      "type": "boolean",
+      "title": "Enviado al encargado",
+      "default": false
+    }
+  },
+  "required": [
+    "student_profile_id",
+    "area"
+  ]
+}

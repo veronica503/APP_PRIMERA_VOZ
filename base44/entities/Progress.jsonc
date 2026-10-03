@@ -1,0 +1,38 @@
+{
+  "name": "Progress",
+  "type": "object",
+  "properties": {
+    "student_profile_id": {
+      "type": "string",
+      "title": "Perfil del estudiante"
+    },
+    "area": {
+      "type": "string",
+      "title": "\u00c1rea",
+      "enum": [
+        "habla",
+        "lectura",
+        "escritura"
+      ]
+    },
+    "current_level": {
+      "type": "number",
+      "title": "Nivel actual",
+      "default": 1
+    },
+    "current_activity": {
+      "type": "number",
+      "title": "Actividad actual",
+      "default": 0
+    },
+    "completed_activities_total": {
+      "type": "number",
+      "title": "Actividades completadas",
+      "default": 0
+    }
+  },
+  "required": [
+    "student_profile_id",
+    "area"
+  ]
+}
