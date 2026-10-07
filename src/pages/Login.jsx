@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
 import AuthShell from "@/components/AuthShell";
 import { Loader2 } from "lucide-react";
 import { safeReturnTo } from "@/lib/authReturnTo";
@@ -16,11 +15,26 @@ export default function Login() {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
-      await base44.auth.loginViaEmailPassword(email, password);
-      window.location.href = returnTo !== "/" ? returnTo : "/inicio";
+      const response = await fetch("http://localhost/api/login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.status === "success") {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        window.location.href = returnTo !== "/" ? returnTo : "/inicio";
+      } else {
+        setError(data.message || "Correo o contraseña incorrectos");
+      }
     } catch (err) {
-      setError(err.message || "Correo o contraseña incorrectos");
+      setError("Detalle del error: " + (err.message || String(err)));
     } finally {
       setLoading(false);
     }
@@ -32,12 +46,18 @@ export default function Login() {
         <h2 className="font-display font-bold text-2xl ink-text">¡Hola de nuevo!</h2>
         <p className="muted-ink font-semibold text-sm">Inicia sesión para seguir aprendiendo</p>
       </div>
+
       {error && (
-        <div className="mb-4 p-3 rounded-2xl bg-red-50 text-red-600 text-sm font-semibold text-center">{error}</div>
+        <div className="mb-4 p-3 rounded-2xl bg-red-50 text-red-600 text-sm font-semibold text-center">
+          {error}
+        </div>
       )}
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <label className="font-display font-semibold ink-text text-sm" htmlFor="email">Usuario (correo)</label>
+          <label className="font-display font-semibold ink-text text-sm" htmlFor="email">
+            Usuario (correo)
+          </label>
           <input
             id="email"
             type="email"
@@ -51,8 +71,11 @@ export default function Login() {
             required
           />
         </div>
+
         <div className="space-y-1.5">
-          <label className="font-display font-semibold ink-text text-sm" htmlFor="password">Contraseña</label>
+          <label className="font-display font-semibold ink-text text-sm" htmlFor="password">
+            Contraseña
+          </label>
           <input
             id="password"
             type="password"
@@ -65,17 +88,27 @@ export default function Login() {
             required
           />
         </div>
+
         <button
           type="submit"
           disabled={loading}
           className="w-full h-14 pill-btn brand-gradient text-white text-lg flex items-center justify-center gap-2 disabled:opacity-60"
         >
-          {loading ? <><Loader2 className="w-5 h-5 animate-spin" /> Entrando...</> : "INICIAR SESIÓN"}
+          {loading ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" /> Entrando...
+            </>
+          ) : (
+            "INICIAR SESIÓN"
+          )}
         </button>
       </form>
+
       <p className="text-center text-sm muted-ink font-semibold mt-5">
         ¿No tienes cuenta?{" "}
-        <Link to="/register" className="font-bold brand-text hover:underline">Crear una cuenta</Link>
+        <Link to="/register" className="font-bold brand-text hover:underline">
+          Crear una cuenta
+        </Link>
       </p>
     </AuthShell>
   );
